@@ -6,7 +6,6 @@ fn main() {
     // 2. There can only be one owner at a time.
     // 3. When the owner goes out of scope, the value will be dropped.
 
-
     // Learning ownership using strings
     // create a string literal (stored on heap)
     let s = String::from("hello");
@@ -33,13 +32,13 @@ fn main() {
     // and then the reference is moved to s2. Therefore, when we try to print s1 after declaring
     // s2, the following error occurs:
 
-// 2 |     let s1 = String::from("hello");
-//   |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
-// 3 |     let s2 = s1;
-//   |              -- value moved here
-// 4 |
-// 5 |     println!("{}, world!", s1);
-//   |                            ^^ value borrowed here after move
+    // 2 |     let s1 = String::from("hello");
+    //   |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
+    // 3 |     let s2 = s1;
+    //   |              -- value moved here
+    // 4 |
+    // 5 |     println!("{}, world!", s1);
+    //   |                            ^^ value borrowed here after move
 
     // This solves the issue, because now only s2 is freed when both s1 and s2 go out of scope
     // because s1 is already invalidated by the move.
@@ -64,7 +63,7 @@ fn main() {
     // We cannot add the 'Copy' trait to a type if it has implemented the 'Drop' trait. This
     // is because if we need to do anything special to the type when it goes out of scope, then
     // we will get a compile time error if we try to implement the "Copy" trait for it.
-    // Therefore, the only types that implement the copy trait are simple scalar values like 
+    // Therefore, the only types that implement the copy trait are simple scalar values like
     // u32, i32, bool, float, char, and tuples with these simple types.
 
     main2();
@@ -82,75 +81,73 @@ fn main() {
     main8();
 
     main9();
-
 }
-
 
 // Ownership and functions
 
 fn main2() {
+    let s = String::from("hello"); // s comes into scope
 
+    takes_ownership(s); // s's value moves into the function...
+                        // ... and so is no longer valid here
 
-    let s = String::from("hello");  // s comes into scope
+    let x = 5; // x comes into scope
 
-    takes_ownership(s);             // s's value moves into the function...
-                                    // ... and so is no longer valid here
+    makes_copy(x); // x would move into the function,
+                   // but i32 is Copy, so it's okay to still
+                   // use x afterward
+} // Here, x goes out of scope, then s. But because s's value was moved, nothing
+  // special happens.
 
-    let x = 5;                      // x comes into scope
-
-    makes_copy(x);                  // x would move into the function,
-                                    // but i32 is Copy, so it's okay to still
-                                    // use x afterward
-
-}   // Here, x goes out of scope, then s. But because s's value was moved, nothing
-    // special happens.
-
-fn takes_ownership(some_string: String) { // some_string comes into scope
+fn takes_ownership(some_string: String) {
+    // some_string comes into scope
     println!("{}", some_string);
 } // Here, some_string goes out of scope and `drop` is called. The backing
   // memory is freed.
 
-fn makes_copy(some_integer: i32) { // some_integer comes into scope
+fn makes_copy(some_integer: i32) {
+    // some_integer comes into scope
     println!("{}", some_integer);
 } // Here, some_integer goes out of scope. Nothing special happens.4
-
 
 // Return Values and Scope
 
 fn main3() {
-    let s1 = gives_ownership();         // gives_ownership moves its return
-    println!("{s1}");                           // value into s1
+    let s1 = gives_ownership(); // gives_ownership moves its return
+    println!("{s1}"); // value into s1
 
-    let s2 = String::from("hello");     // s2 comes into scope
+    let s2 = String::from("hello"); // s2 comes into scope
 
-    let s3 = takes_and_gives_back(s2);  // s2 is moved into
-                                        // takes_and_gives_back, which also
-                                        // moves its return value into s3
+    let s3 = takes_and_gives_back(s2); // s2 is moved into
+                                       // takes_and_gives_back, which also
+                                       // moves its return value into s3
 
     println!("{s3}");
 } // Here, s3 goes out of scope and is dropped. s2 was moved, so nothing
   // happens. s1 goes out of scope and is dropped.
 
-fn gives_ownership() -> String {             // gives_ownership will move its
-                                             // return value into the function
-                                             // that calls it
+fn gives_ownership() -> String {
+    // gives_ownership will move its
+    // return value into the function
+    // that calls it
 
     let some_string = String::from("yours"); // some_string comes into scope
 
-    some_string                              // some_string is returned and
-                                             // moves out to the calling
-                                             // function
+    some_string // some_string is returned and
+                // moves out to the calling
+                // function
 }
 
 // This function takes a String and returns one
-fn takes_and_gives_back(a_string: String) -> String { // a_string comes into
-                                                      // scope
+fn takes_and_gives_back(a_string: String) -> String {
+    // a_string comes into
+    // scope
 
-    a_string  // a_string is returned and moves out to the calling function
+    a_string // a_string is returned and moves out to the calling function
 }
 
 // Without pass by reference and only pass by value as mentioned above,
-// we would need to write code like this: (in order to keep using all values, 
+// we would need to write code like this: (in order to keep using all values,
 // till the end of the scope)
 
 fn main4() {
@@ -158,7 +155,6 @@ fn main4() {
     let (s2, len) = calc_length(s1);
 
     println!("The length of {s2} is {len}.");
-
 }
 
 fn calc_length(s: String) -> (String, usize) {
@@ -174,7 +170,6 @@ fn calc_length(s: String) -> (String, usize) {
 // References and Borrowing
 
 fn main5() {
-
     // A reference is like a pointer, we can follow to access the data stored at an
     // address. Unlike a pointer, a reference is guarnteed to point to a valid value of a
     // particular type for the lifetime of that reference.
@@ -184,12 +179,12 @@ fn main5() {
     let len = calc_length2(&s1); // we pass a reference of s1 into calc_length2
 
     println!("The length of string {s1} is {len}.");
-    
 }
 
-fn calc_length2(s: &String) -> usize {  // the function accepts &String as an argument
-    s.len()                             // these are references and they let you refer to some value without taking ownership of it.
-    // because s does not own s1, the value that s1 has will not be dropped after this function.
+fn calc_length2(s: &String) -> usize {
+    // the function accepts &String as an argument
+    s.len() // these are references and they let you refer to some value without taking ownership of it.
+            // because s does not own s1, the value that s1 has will not be dropped after this function.
 }
 
 // We call the action of creating a reference: '&s1' as BORROWING. Meaning, it is temporarily given
@@ -198,13 +193,11 @@ fn calc_length2(s: &String) -> usize {  // the function accepts &String as an ar
 // What if we try to modify something while borrowing?
 
 fn main6() {
-
     let s1 = String::from("hello");
 
     // change(&s1);
 
     println!("The string s1: {s1}.");
-
 }
 
 // fn change(str: &String) {
@@ -212,7 +205,6 @@ fn main6() {
 // }
 
 // References are immutable by default, just like variables.
-
 
 // Mutable References
 
@@ -224,17 +216,17 @@ fn main7() {
     println!("Print after mutate: {s}");
 }
 
-fn change(some_string: &mut String) { // this is a mutable reference and hence can be modified.
+fn change(some_string: &mut String) {
+    // this is a mutable reference and hence can be modified.
     some_string.push_str(", world");
 }
 
-// NOTE: Mutable references have one big restriction: if you have a mutable reference to a value, 
+// NOTE: Mutable references have one big restriction: if you have a mutable reference to a value,
 // you can have no other references to that value!
 
 // For example, this is invalid code:
 
 fn main8() {
-
     let mut s = String::from("hello");
 
     let _r1 = &mut s;
@@ -250,7 +242,6 @@ fn main8() {
     // 1. Two or more pointers access the same data at the same time.
     // 2. At least one of the pointers is being used to write to the data.
     // 3. There’s no mechanism being used to synchronize access to the data.
-
 
     // NOTE: Cannot combine both mutable and immutable references!
 
@@ -279,14 +270,11 @@ fn main8() {
     // Why? Because of scope! Scope is not necessarily till the end of the function, instead it is only
     // till the point where a variable is used!! Therefore, after r1 and r2 are done printing, they are out
     // of scope and a new mutable reference can be created, even before the function ends.
-
 }
-
 
 // Dangling References
 
 fn main9() {
-
     // It is easy to create a dangling reference. A dangling reference is a location in memory which may
     // have been given to someone else, i.e. freeing that location while still holding a pointer to the location.
 
@@ -309,7 +297,7 @@ fn no_dangle() -> String {
     let s = String::from("hello");
     s
 } // Here the value of s is not dropped, instead s is 'moved' to the calling function, and
-// nothing is deallocated.
+  // nothing is deallocated.
 
 // Rules of references:
 // 1. At any given time, you can have only one mutable reference or many immutable references.

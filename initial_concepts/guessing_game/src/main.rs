@@ -1,6 +1,5 @@
-
-use std::{cmp::Ordering, io};
 use rand::Rng;
+use std::{cmp::Ordering, io};
 
 fn main() {
     println!("Guess the number!");
@@ -34,5 +33,4 @@ fn main() {
             }
         }
     }
-
 }

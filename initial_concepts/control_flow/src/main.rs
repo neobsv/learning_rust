@@ -1,4 +1,3 @@
-
 fn main() {
     let num = 3;
 
@@ -27,7 +26,7 @@ fn main() {
     println!("The value of number is: {number}");
 
     // rust has three kinds of loops: loop, while, for
-    
+
     // loop is an infinite loop, which supports break and continue
     loop {
         println!("next");
@@ -54,9 +53,8 @@ fn main() {
     let mut count = 0;
 
     'counting_up: loop {
-
         println!("count: {count}");
-        
+
         let mut remaining = 10;
 
         loop {
@@ -76,7 +74,7 @@ fn main() {
     // while: conditional looping
     let mut number = 3;
 
-    while number != 0  {
+    while number != 0 {
         println!("while: {number}!");
         number -= 1;
     }
@@ -102,6 +100,4 @@ fn main() {
     for n in (1..4).rev() {
         println!("value of n: {}!", n);
     }
-
-
 }

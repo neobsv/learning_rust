@@ -16,7 +16,6 @@ fn main() {
     print!("{x}");
 
     plus_one(x);
-
 }
 
 fn another_function() {
