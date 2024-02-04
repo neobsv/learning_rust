@@ -36,6 +36,7 @@ Educational Rust Live Coding: https://youtube.com/playlist?list=PL8lUUBadSMNBNKM
 
 Zero to Production In Rust: https://www.lpalmieri.com/posts/2020-05-24-zero-to-production-0-foreword/
 
+Benchmarking Rust: https://bencher.dev/learn/benchmarking/rust/criterion/
 
 
 ## Notes
