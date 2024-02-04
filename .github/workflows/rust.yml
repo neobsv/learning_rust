@@ -10,11 +10,16 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  build_collections:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./collections/std_collections
 
     steps:
     - uses: actions/checkout@v3
     - name: Build
-      run: cd collections/std_collections; cargo build --verbose
+      run: cargo build -vv
+    - name: Build
+      run: cargo run -vv
