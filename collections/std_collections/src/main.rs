@@ -10,6 +10,9 @@
 
 // 3. HashMap: associative data structure, the more general data structure is called map, hashmap is a particular implementation.
 
+use std::collections::HashMap;
+use unicode_segmentation::UnicodeSegmentation;
+
 fn main() {
     println!("Hello, world!");
 
@@ -109,6 +112,9 @@ fn main() {
     // The borrow checker ensures that any references to contents of a vector are only used while the vector itself is valid.
 
     main2();
+
+    main3();
+
 }
 
 // Strings
@@ -179,4 +185,167 @@ fn main2() {
     // NOTE: this call doesn’t take ownership of any of its parameters!
     let s = format!("{s1}-{s2}-{s3}");
     println!("concatenated: {}", s);
+
+    // Indexing into Strings
+
+    // Accessing individual characters in a string by referencing them by index is a valid and common operation. However, if you try to access parts of a String using indexing syntax in Rust, you’ll get an error.
+    let _s1 = String::from("hello");
+    // let h = s1[0]; // ERROR: String cannot be indexed by integer
+
+    // A String is a wrapper over a Vec<u8>. The vector storing the string “Hola” is 4 bytes long. Each of these letters takes 1 byte when encoded in UTF-8
+
+    // However, consider the following non english language,
+    let _hello = String::from("Здравствуйте");
+    // The number of bytes it takes to encode “Здравствуйте” in UTF-8 is 24, because each Unicode scalar value in that string takes 2 bytes of storage. Therefore, an index into the string’s bytes will not always correlate to a valid Unicode scalar value
+
+    // Another point about UTF-8 is that there are actually three relevant ways to look at strings from Rust’s perspective: as bytes, scalar values, and grapheme clusters (the closest thing to what we would call letters).
+    // If we look at the Hindi word “नमस्ते” written in the Devanagari script, it is stored as a vector of u8 values that looks like this:
+
+    // [224, 164, 168, 224, 164, 174, 224, 164, 184, 224, 165, 141, 224, 164, 164,224, 165, 135]
+
+    // That’s 18 bytes and is how computers ultimately store this data. If we look at them as Unicode scalar values, which are what Rust’s char type is, those bytes look like this:
+    // ['न', 'म', 'स', '्', 'त', 'े']
+
+    // There are six char values here, but the fourth and sixth are not letters: they’re diacritics that don’t make sense on their own. Finally, if we look at them as grapheme clusters, we’d get what a person would call the four letters that make up the Hindi word:
+    // ["न", "म", "स्", "ते"]
+
+    // One more reason that Rust doesn't allow us to index Strings is because operations are expected to take O(1) time but rust linear searches the String so, we can't guarantee that
+
+    // You can convert a String or a &str to a vector of chars and then index that vector
+    let s = "Hello world!";
+    let my_vec: Vec<char> = s.chars().collect();
+    println!("my_vec[0]: {}", my_vec[0]);
+    println!("my_vec[1]: {}", my_vec[1]);
+
+    // Slicing Strings
+
+    //  It’s not clear what the return type of the string-indexing operation should be: a byte value, a character, a grapheme cluster, or a string slice.
+
+    // Indexing is possible with a range specified within []
+    let hello = "Здравствуйте";
+    let _s = &hello[0..4];
+    // Here, s will be a &str that contains the first 4 bytes of the string. Earlier, we mentioned that each of these characters was 2 bytes, which means s will be Зд.
+
+    // NOTE: Use ranges with caution! If we were to try to slice only part of a character’s bytes with something like &hello[0..1], Rust would panic at runtime in the same way as if an invalid index were accessed in a vector
+
+    // Methods for iterating over strings
+
+    // For unicode scalar values, use the chars() method:
+    for c in "Зд".chars() {
+        println!("{c}");
+    }
+    
+    // The bytes() method returns each raw byte
+    for b in "Зд".bytes() {
+        println!("{b}");
+    }
+
+    // There is a crate called unicode-segmentation which can be used to print individual grapheme clusters
+    for g in  UnicodeSegmentation::graphemes("नमस्ते", true).collect::<Vec<&str>>() {
+        println!("{g}");
+    }
+
+    // Programmers have to put more thought into handling UTF-8 data upfront. This trade-off exposes more of the complexity of strings than is apparent in other programming languages, but it prevents you from having to handle errors involving non-ASCII characters later in your development life cycle.
+
+
 }
+
+
+// Hashmaps
+
+// Storing keys with associated values in Hash Maps, the type HashMap<K, V> stores a mapping of type K to type V using a hashing function
+
+fn main3() {
+
+    // Creating a hashmap with new() and inserting elements
+    let mut scores = HashMap::new();
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Yellow"), 50);
+
+    //  We need to bring it into scope using the 'use' keyword, It’s not included in the features brought into scope automatically in the prelude.
+
+    // Hashmaps are homogeneous, the keys and values must have the same data types, and like vectors, hash maps store data on the heap
+
+    // Accessing Values in a Hash Map
+
+    let mut scores = HashMap::new();
+
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Yellow"), 50);
+
+    let team_name = String::from("Blue");
+    let score = scores.get(&team_name).copied().unwrap_or(0); // get() returns an Option<&V>, so we need to unwrap_or() it, meaning if it returns None then convert it into '0'
+
+    dbg!("Blue team score: {:?}", score);
+
+    // Iterating over a hashmap
+
+    for (key, value) in &scores {
+        println!("{key}: {value}");
+    }
+
+    // Hashmaps and Ownership
+
+    // IMPORTANT: For types that implement the Copy trait, like i32, the values are copied into the hash map. For owned values like String, the values will be moved and the hash map will be the owner of those values!
+    let field_name = String::from("Favorite color");
+    let field_value = String::from("Blue");
+
+    let mut map = HashMap::new();
+    map.insert(field_name, field_value);
+    // field_name and field_value are invalid at this point, try using them and
+    // see what compiler error you get!
+
+    // Updating a HashMap
+
+    // When you want to change the data in a hash map, you have to decide how to handle the case when a key already has a value assigned:
+    // 1. You could replace the old value with the new value, completely disregarding the old value. 
+    // 2. You could keep the old value and ignore the new value, only adding the new value if the key doesn’t already have a value. 
+    // 3.Or you could combine the old value and the new value    
+
+    // Case 1: overwriting a value, simple just use insert() over and over again
+    let mut scores = HashMap::new();
+
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Blue"), 25);
+
+    println!("{:?}", scores);
+
+    // Case 2: Adding a key and value only if a value isn't present
+    // Hash maps have a special API for this called entry that takes the key you want to check as a parameter.
+    // The return value of the entry method is an enum called Entry that represents a value that might or might not exist
+    let mut scores = HashMap::new();
+    scores.insert(String::from("Blue"), 10);
+
+    scores.entry(String::from("Yellow")).or_insert(50);
+    scores.entry(String::from("Blue")).or_insert(50);
+
+    // The or_insert() method on Entry is defined to return a mutable reference to the value for the corresponding Entry key if that key exists.  
+    // And if not, inserts the parameter as the new value for this key and returns a mutable reference to the new value
+
+    println!("{:?}", scores);
+
+    // Case 3: Updating a value based on an old value
+
+    // IMPORTANT: The or_insert method returns a mutable reference (&mut V) to the value for the specified key. Here we store that mutable reference in the count variable, 
+    // so in order to assign to that value, we must first dereference count using the asterisk (*). 
+    // The mutable reference goes out of scope at the end of the for loop, so all of these changes are safe and allowed by the borrowing rules.
+
+    let text = "hello world wonderful world";
+
+    let mut map = HashMap::new();
+
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+
+    println!("Updated hashmap: {:?}", map);
+
+    // Hashing Functions
+
+    // By default, HashMap uses a hashing function called SipHash that can provide resistance to Denial of Service (DoS) attacks involving hash tables1. 
+    // This is not the fastest hashing algorithm available, but the trade-off for better security that comes with the drop in performance is worth it
+    //  You can switch to another function by specifying a different hasher. A hasher is a type that implements the BuildHasher trait. crates.io has libraries which provide hashers implementing many common hashing algorithms.
+
+}
+
