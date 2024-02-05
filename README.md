@@ -42,4 +42,12 @@ Benchmarking Rust: https://bencher.dev/learn/benchmarking/rust/criterion/
 ## Notes
 
 Command to run rustfmt over all .rs files recursively:
-find . | grep -E "^*.rs$" | xargs -i rustfmt {}
+find . | grep -E "^.*\.rs$" | xargs -i rustfmt {}
+
+Note: 
+On a mac,
+* brew install grep
+* you need to call 'ggrep' instead of 'grep' in the above command
+* you need to use -I instead of -i for xargs
+
+find . | ggrep -E "^.*\.rs$" | xargs -I {} rustfmt {}

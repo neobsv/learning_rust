@@ -114,7 +114,6 @@ fn main() {
     main2();
 
     main3();
-
 }
 
 // Strings
@@ -234,29 +233,25 @@ fn main2() {
     for c in "Зд".chars() {
         println!("{c}");
     }
-    
+
     // The bytes() method returns each raw byte
     for b in "Зд".bytes() {
         println!("{b}");
     }
 
     // There is a crate called unicode-segmentation which can be used to print individual grapheme clusters
-    for g in  UnicodeSegmentation::graphemes("नमस्ते", true).collect::<Vec<&str>>() {
+    for g in UnicodeSegmentation::graphemes("नमस्ते", true).collect::<Vec<&str>>() {
         println!("{g}");
     }
 
     // Programmers have to put more thought into handling UTF-8 data upfront. This trade-off exposes more of the complexity of strings than is apparent in other programming languages, but it prevents you from having to handle errors involving non-ASCII characters later in your development life cycle.
-
-
 }
-
 
 // Hashmaps
 
 // Storing keys with associated values in Hash Maps, the type HashMap<K, V> stores a mapping of type K to type V using a hashing function
 
 fn main3() {
-
     // Creating a hashmap with new() and inserting elements
     let mut scores = HashMap::new();
     scores.insert(String::from("Blue"), 10);
@@ -298,9 +293,9 @@ fn main3() {
     // Updating a HashMap
 
     // When you want to change the data in a hash map, you have to decide how to handle the case when a key already has a value assigned:
-    // 1. You could replace the old value with the new value, completely disregarding the old value. 
-    // 2. You could keep the old value and ignore the new value, only adding the new value if the key doesn’t already have a value. 
-    // 3.Or you could combine the old value and the new value    
+    // 1. You could replace the old value with the new value, completely disregarding the old value.
+    // 2. You could keep the old value and ignore the new value, only adding the new value if the key doesn’t already have a value.
+    // 3.Or you could combine the old value and the new value
 
     // Case 1: overwriting a value, simple just use insert() over and over again
     let mut scores = HashMap::new();
@@ -319,15 +314,15 @@ fn main3() {
     scores.entry(String::from("Yellow")).or_insert(50);
     scores.entry(String::from("Blue")).or_insert(50);
 
-    // The or_insert() method on Entry is defined to return a mutable reference to the value for the corresponding Entry key if that key exists.  
+    // The or_insert() method on Entry is defined to return a mutable reference to the value for the corresponding Entry key if that key exists.
     // And if not, inserts the parameter as the new value for this key and returns a mutable reference to the new value
 
     println!("{:?}", scores);
 
     // Case 3: Updating a value based on an old value
 
-    // IMPORTANT: The or_insert method returns a mutable reference (&mut V) to the value for the specified key. Here we store that mutable reference in the count variable, 
-    // so in order to assign to that value, we must first dereference count using the asterisk (*). 
+    // IMPORTANT: The or_insert method returns a mutable reference (&mut V) to the value for the specified key. Here we store that mutable reference in the count variable,
+    // so in order to assign to that value, we must first dereference count using the asterisk (*).
     // The mutable reference goes out of scope at the end of the for loop, so all of these changes are safe and allowed by the borrowing rules.
 
     let text = "hello world wonderful world";
@@ -343,9 +338,7 @@ fn main3() {
 
     // Hashing Functions
 
-    // By default, HashMap uses a hashing function called SipHash that can provide resistance to Denial of Service (DoS) attacks involving hash tables1. 
+    // By default, HashMap uses a hashing function called SipHash that can provide resistance to Denial of Service (DoS) attacks involving hash tables1.
     // This is not the fastest hashing algorithm available, but the trade-off for better security that comes with the drop in performance is worth it
     //  You can switch to another function by specifying a different hasher. A hasher is a type that implements the BuildHasher trait. crates.io has libraries which provide hashers implementing many common hashing algorithms.
-
 }
-
