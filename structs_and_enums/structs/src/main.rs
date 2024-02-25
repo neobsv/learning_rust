@@ -190,7 +190,7 @@ impl Square {
     // the type that appears after the impl keyword, which in this case is Square.
     fn circle(size: f32) -> Self {
         Self {
-            side: (size * 3.14 * 2.0) as u32,
+            side: (size * std::f32::consts::PI * 2.0) as u32,
         }
     }
 }
