@@ -10,12 +10,29 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build_collections:
-
+  build_all:
+    name: Build, Lint and Run Everything
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix: { 
+        dir: [
+              "./collections/std_collections", 
+              "./error_handling/errors", 
+              "./initial_concepts/control_flow", 
+              "./initial_concepts/functions", 
+              "./initial_concepts/guessing_game", 
+              "./initial_concepts/variables", 
+              "./organizing_code/packages_crates_modules",
+              "./structs_and_enums/enums",
+              "./structs_and_enums/structs",
+              "./understanding_ownership/ownership_borrowing",
+              "./understanding_ownership/slices"
+            ]
+      }
     defaults:
       run:
-        working-directory: ./collections/std_collections
+        working-directory: ${{ matrix.dir }}
 
     steps:
     - uses: actions/checkout@v3
