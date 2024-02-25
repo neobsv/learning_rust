@@ -1,5 +1,9 @@
 # learning_rust
 
+![Rust](https://img.shields.io/badge/rust-1.75+-orange.svg)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/thebsv/learning_rust/rust.yml)
+![GitHub License](https://img.shields.io/github/license/thebsv/learning_rust?color=blue)
+
 Excerpts and examples from the rust book for fast learning
 
 Rust Book: 
