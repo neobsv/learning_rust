@@ -28,10 +28,13 @@ fn main() {
     // rust has three kinds of loops: loop, while, for
 
     // loop is an infinite loop, which supports break and continue
+
+    /*
     loop {
         println!("next");
         break;
     }
+    */
 
     let mut counter = 0;
 

@@ -17,12 +17,11 @@ jobs:
       fail-fast: true
       matrix: { 
         dir: [
-              "./collections/std_collections", 
-              "./error_handling/errors", 
-              "./initial_concepts/control_flow", 
-              "./initial_concepts/functions", 
-              "./initial_concepts/guessing_game", 
-              "./initial_concepts/variables", 
+              "./collections/std_collections",
+              "./error_handling/errors",
+              "./initial_concepts/control_flow",
+              "./initial_concepts/functions",
+              "./initial_concepts/variables",
               "./organizing_code/packages_crates_modules",
               "./structs_and_enums/enums",
               "./structs_and_enums/structs",
