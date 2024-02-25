@@ -29,6 +29,8 @@ https://doc.rust-lang.org/std/index.html
 Hands On Learning: 
 https://github.com/rust-lang/rustlings/
 
+Rust Performance Book:
+https://nnethercote.github.io/perf-book/
 
 ## Other Resources
 
@@ -43,7 +45,7 @@ Are we there yet:
 https://github.com/UgurcanAkkok/AreWeRustYet
 
 Educational Rust Live Coding:
- https://youtube.com/playlist?list=PL8lUUBadSMNBNKMYJpUE830tBiN6bxVRw&si=Z9voECcHKHalakYY
+https://youtube.com/playlist?list=PL8lUUBadSMNBNKMYJpUE830tBiN6bxVRw&si=Z9voECcHKHalakYY
 
 Zero to Production In Rust: 
 https://www.lpalmieri.com/posts/2020-05-24-zero-to-production-0-foreword/
@@ -55,7 +57,7 @@ https://bencher.dev/learn/benchmarking/rust/criterion/
 ## Notes
 
 Command to run rustfmt over all .rs files recursively:
-find . | grep -E "^.*\.rs$" | xargs -i rustfmt {}
+`find . | grep -E "^.*\.rs$" | xargs -i rustfmt {}`
 
 Note: 
 On a mac,
@@ -63,4 +65,4 @@ On a mac,
 * you need to call 'ggrep' instead of 'grep' in the above command
 * you need to use -I instead of -i for xargs
 
-find . | ggrep -E "^.*\.rs$" | xargs -I {} rustfmt {}
+`find . | ggrep -E "^.*\.rs$" | xargs -I {} rustfmt {}`
