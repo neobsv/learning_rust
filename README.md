@@ -1,7 +1,7 @@
 # learning_rust
 
 ![Rust](https://img.shields.io/badge/rust-1.75+-orange.svg)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/thebsv/learning_rust/rust.yml)
+![GitHub Actions](https://img.shields.io/github/actions/workflow/status/thebsv/learning_rust/rust.yml)
 ![GitHub License](https://img.shields.io/github/license/thebsv/learning_rust?color=blue)
 
 Excerpts and examples from the rust book for fast learning
@@ -35,6 +35,15 @@ https://github.com/rust-lang/rustlings/
 
 Rust Performance Book:
 https://nnethercote.github.io/perf-book/
+
+Idiomatic Rust:
+https://github.com/mre/idiomatic-rust
+
+Rust for Rustaceans:
+https://rust-for-rustaceans.com/
+
+Crust of Rust:
+https://www.youtube.com/watch?v=rAl-9HwD858&list=PLqbS7AVVErFiWDOAVrPt7aYmnuuOLYvOa
 
 ## Other Resources
 
