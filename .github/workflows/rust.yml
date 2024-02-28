@@ -36,10 +36,26 @@ jobs:
         working-directory: ${{ matrix.dir }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Build
       run: cargo build -vv
     - name: Clippy
       run: cargo clippy
     - name: Run
       run: cargo run -vv
+  
+  build_minigrep:
+    name: Build, Lint and Run Minigrep
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "./projects/minigrep"
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: cargo build -vv
+    - name: Clippy
+      run: cargo clippy
+    - name: Run
+      run: cargo run -- to sample.txt
