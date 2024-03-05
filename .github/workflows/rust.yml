@@ -27,7 +27,8 @@ jobs:
               "./structs_and_enums/structs",
               "./understanding_ownership/ownership_borrowing",
               "./understanding_ownership/slices",
-              "./generics_traits_lifetimes/gtl"
+              "./generics_traits_lifetimes/gtl",
+              "./iterators_closures/closures"
             ]
       }
     defaults:
