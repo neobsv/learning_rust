@@ -28,7 +28,8 @@ jobs:
               "./understanding_ownership/ownership_borrowing",
               "./understanding_ownership/slices",
               "./generics_traits_lifetimes/gtl",
-              "./iterators_closures/closures"
+              "./iterators_closures/closures",
+              "./iterators_closures/iterators",
             ]
       }
     defaults:
@@ -47,9 +48,17 @@ jobs:
   build_minigrep:
     name: Build, Lint and Run Minigrep
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix: { 
+        dir: [
+          "./projects/minigrep",
+          "./projects/minigrep_iter"
+        ]
+      }
     defaults:
       run:
-        working-directory: "./projects/minigrep"
+        working-directory: ${{ matrix.dir }}
 
     steps:
     - uses: actions/checkout@v4
