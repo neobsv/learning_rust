@@ -30,6 +30,8 @@ jobs:
               "./generics_traits_lifetimes/gtl",
               "./iterators_closures/closures",
               "./iterators_closures/iterators",
+              "./organizing_code/cratesio_libraries",
+              "./organizing_code/workspace_example"
             ]
       }
     defaults:
