@@ -45,6 +45,9 @@ https://rust-for-rustaceans.com/
 Crust of Rust:
 https://www.youtube.com/watch?v=rAl-9HwD858&list=PLqbS7AVVErFiWDOAVrPt7aYmnuuOLYvOa
 
+Rust Atomics:
+https://marabos.nl/atomics/
+
 ## Other Resources
 
 Lobsters: 
