@@ -31,7 +31,8 @@ jobs:
               "./iterators_closures/closures",
               "./iterators_closures/iterators",
               "./organizing_code/cratesio_libraries",
-              "./organizing_code/workspace_example/add"
+              "./organizing_code/workspace_example/add",
+	      "./smart_pointers/box_smart_pointer"
             ]
       }
     defaults:
