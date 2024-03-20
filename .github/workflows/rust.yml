@@ -32,8 +32,10 @@ jobs:
               "./iterators_closures/iterators",
               "./organizing_code/cratesio_libraries",
               "./organizing_code/workspace_example/add",
-	      "./smart_pointers/box_smart_pointer"
-            ]
+	            "./smart_pointers/box_smart_pointer",
+              "./smart_pointers/rc_smart_pointer",
+              "./smart_pointers/refcell_smart_pointer"
+          ]
       }
     defaults:
       run:
