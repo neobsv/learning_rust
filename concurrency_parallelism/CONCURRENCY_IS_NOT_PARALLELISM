@@ -1,0 +1,12 @@
+Rob Pike just screaming his lungs out on stage!
+
+
+Parallelism: Split the file or input into parts, feed each thread one part and put the results together at the end.
+	- multiple tasks of the same program run at the same time, they are independent of each other
+	- many units of computation are executing at the same time, on different cores
+
+Concurrency: Multiple computations happening at the same time
+	- multiple tasks are interleaved, onto one single CPU core, and they finish in overlapping time periods
+	- pipelining is a great example of this, there is only one unit of computation executing at a given time, but units from different tasks are interleaved to execute together and come to completion together
+
+
