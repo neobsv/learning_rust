@@ -35,7 +35,8 @@ jobs:
 	      "./smart_pointers/box_smart_pointer",
               "./smart_pointers/rc_smart_pointer",
               "./smart_pointers/refcell_smart_pointer",
-	      "./concurrency_parallelism/concurrency"
+	      "./concurrency_parallelism/concurrency",
+	      "./object_oriented/oop"
           ]
       }
     defaults:
