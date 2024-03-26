@@ -32,13 +32,17 @@ jobs:
               "./iterators_closures/iterators",
               "./organizing_code/cratesio_libraries",
               "./organizing_code/workspace_example/add",
-	      "./smart_pointers/box_smart_pointer",
+              "./smart_pointers/box_smart_pointer",
               "./smart_pointers/rc_smart_pointer",
               "./smart_pointers/refcell_smart_pointer",
-	      "./concurrency_parallelism/concurrency",
-	      "./object_oriented/oop",
+              "./concurrency_parallelism/concurrency",
+              "./object_oriented/oop",
               "./patterns_matching/patterns",
-	      "./advanced_features/advanced"
+              "./advanced_features/unsafe",
+              "./advanced_features/advanced_traits",
+              "./advanced_features/advanced_types",
+              "./advanced_features/functions_closures",
+              "./advanced_features/macros"
           ]
       }
     defaults:
